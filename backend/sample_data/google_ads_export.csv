@@ -1,0 +1,5 @@
+Timestamp,Customer Name,Customer Email,Cellular Phone,Organization,Region,Lead Status Description,Assigned Rep,Campaign Identifier
+2026-06-01 09:15:00,Amit Sharma,amit.sharma@techcorp.in,9811223344,TechCorp Solutions,Delhi,Follow up required tomorrow,sales_rep1@company.com,varah_swamy
+2026-06-01 10:45:12,Elena Rostova,elena.r@globaltrade.org,+1-4155552671,Global Trade,California,Did not pick up phone,sales_rep2@company.com,leads_on_demand
+2026-06-01 11:20:05,Vikram Malhotra,vikram.m@investments.co,9988776655,Malhotra Capital,Mumbai,Sale completed and token paid,sales_rep1@company.com,meridian_tower
+2026-06-01 14:05:33,David Miller,david@millerconsulting.com,12025550143,Miller Consulting,London,Irrelevant inquiry,sales_rep3@company.com,unknown_promo
