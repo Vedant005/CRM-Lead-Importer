@@ -276,8 +276,3 @@ The application includes 4 pre-loaded benchmark datasets that can be tested dire
 - **Streaming Uploads**: Temporary files uploaded via Multer are parsed and cleaned from the server disk immediately after processing.
 - **Rate Limit Resilience**: Groq API calls are wrapped in an exponential backoff retry handler to gracefully handle high concurrency and temporary API rate limits (`HTTP 429`).
 - **CORS & Payload Limits**: Explicit CORS origin policies and `50mb` payload parsing limits.
-
----
-
-## License
-This project is open-source and available under the [ISC License](LICENSE).
