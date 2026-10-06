@@ -7,11 +7,18 @@ import { ManageLeadsView } from "../src/components/ManageLeadsView";
 import { CSVImportModal } from "../src/components/CSVImportModal";
 import { LeadDetailDrawer } from "../src/components/LeadDetailDrawer";
 import { CRMLeadRecord, ImportResult } from "../src/types/crm";
-import { CheckCircle2, Sparkles } from "lucide-react";
+import {
+  CheckCircle2,
+  Sparkles,
+  Menu,
+  TrendingUp,
+  UploadCloud,
+} from "lucide-react";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<string>("lead-sources");
   const [isImportModalOpen, setIsImportModalOpen] = useState<boolean>(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState<boolean>(false);
   const [importedLeads, setImportedLeads] = useState<CRMLeadRecord[]>([]);
   const [skippedLeads, setSkippedLeads] = useState<
     (CRMLeadRecord & { _skip_reason?: string })[]
@@ -44,19 +51,47 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#f8fafc] flex">
-
+    <div className="min-h-screen bg-[#f8fafc] flex flex-col md:flex-row">
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
         leadsCount={importedLeads.length}
+        isMobileOpen={isMobileMenuOpen}
+        onMobileClose={() => setIsMobileMenuOpen(false)}
       />
 
+      <div className="flex-1 min-w-0 flex flex-col h-auto md:h-screen md:overflow-y-auto">
+        {/* Mobile Top Navigation Bar (< md) */}
+        <header className="md:hidden sticky top-0 z-30 bg-white border-b border-slate-200/80 px-4 py-3 flex items-center justify-between shadow-2xs">
+          <div className="flex items-center gap-2.5">
+            <button
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="p-2 -ml-1.5 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors"
+              aria-label="Open navigation menu"
+            >
+              <Menu className="w-5 h-5" />
+            </button>
+            <div className="flex items-center gap-2">
+              <div className="w-7 h-7 rounded-lg bg-black flex items-center justify-center text-white shadow-xs shrink-0">
+                <TrendingUp className="w-4 h-4 text-white transform -rotate-45" />
+              </div>
+              <span className="font-bold text-base tracking-tight text-slate-900">
+                DataWeave
+              </span>
+            </div>
+          </div>
 
-      <main className="flex-1 min-w-0 flex flex-col h-screen overflow-y-auto">
+          <button
+            onClick={() => setIsImportModalOpen(true)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-xl bg-[#f87146] text-white text-xs font-semibold shadow-2xs hover:bg-[#e05b30] active:scale-95 transition-all"
+          >
+            <UploadCloud className="w-3.5 h-3.5" />
+            <span>Import</span>
+          </button>
+        </header>
 
         {toastMessage && (
-          <div className="fixed top-5 right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 animate-in slide-in-from-top-3 duration-300">
+          <div className="fixed top-4 sm:top-5 right-4 sm:right-5 z-50 bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-xl border border-slate-700 flex items-center gap-3 animate-in slide-in-from-top-3 duration-300 max-w-sm sm:max-w-md">
             <div className="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center shrink-0">
               <CheckCircle2 className="w-4 h-4" />
             </div>
@@ -64,7 +99,7 @@ export default function Home() {
           </div>
         )}
 
-        <div className="p-6 md:p-8 flex-1">
+        <main className="p-4 sm:p-6 md:p-8 flex-1">
           {activeTab === "lead-sources" && (
             <LeadSourcesView
               onOpenImportModal={() => setIsImportModalOpen(true)}
@@ -84,7 +119,7 @@ export default function Home() {
           )}
 
           {activeTab !== "lead-sources" && activeTab !== "manage-leads" && (
-            <div className="bg-white border border-slate-200/80 rounded-2xl p-12 text-center max-w-xl mx-auto my-12">
+            <div className="bg-white border border-slate-200/80 rounded-2xl p-8 sm:p-12 text-center max-w-xl mx-auto my-6 sm:my-12">
               <div className="w-12 h-12 rounded-2xl bg-teal-50 text-[#0f5c53] flex items-center justify-center mx-auto mb-3">
                 <Sparkles className="w-6 h-6" />
               </div>
@@ -94,7 +129,7 @@ export default function Home() {
               <p className="text-xs text-slate-500 mt-1 mb-5">
                 Explore lead importation or switch to the Lead Sources dashboard.
               </p>
-              <div className="flex items-center justify-center gap-3">
+              <div className="flex items-center justify-center gap-3 flex-wrap">
                 <button
                   onClick={() => setActiveTab("lead-sources")}
                   className="px-4 py-2 rounded-xl bg-[#0f5c53] text-white text-xs font-semibold hover:bg-[#0a443d] transition-colors"
@@ -110,8 +145,8 @@ export default function Home() {
               </div>
             </div>
           )}
-        </div>
-      </main>
+        </main>
+      </div>
 
       <CSVImportModal
         isOpen={isImportModalOpen}
