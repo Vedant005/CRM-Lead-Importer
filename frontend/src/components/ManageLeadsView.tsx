@@ -174,31 +174,31 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
     switch (status) {
       case "SALE_DONE":
         return (
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#ebf3ff] text-[#2563eb] border border-[#bfdbfe] inline-flex items-center">
+          <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[#ebf3ff] text-[#2563eb] border border-[#bfdbfe] inline-flex items-center">
             Sale Done
           </span>
         );
       case "GOOD_LEAD_FOLLOW_UP":
         return (
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#e6f4f1] text-[#0f5c53] border border-[#a7f3d0] inline-flex items-center">
+          <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[#e6f4f1] text-[#0f5c53] border border-[#a7f3d0] inline-flex items-center">
             Good Lead
           </span>
         );
       case "DID_NOT_CONNECT":
         return (
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#f1f5f9] text-[#475569] border border-[#cbd5e1] inline-flex items-center">
+          <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[#f1f5f9] text-[#475569] border border-[#cbd5e1] inline-flex items-center">
             Not Dialed
           </span>
         );
       case "BAD_LEAD":
         return (
-          <span className="px-3 py-1 rounded-full text-xs font-semibold bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] inline-flex items-center">
+          <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-semibold bg-[#fef2f2] text-[#dc2626] border border-[#fecaca] inline-flex items-center">
             Bad Lead
           </span>
         );
       default:
         return (
-          <span className="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
+          <span className="px-2.5 sm:px-3 py-1 rounded-full text-[11px] sm:text-xs font-medium bg-slate-100 text-slate-700 border border-slate-200">
             {status || "Unknown"}
           </span>
         );
@@ -206,42 +206,42 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
   };
 
   return (
-    <div className="space-y-6 max-w-7xl mx-auto">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+    <div className="space-y-5 sm:space-y-6 max-w-7xl mx-auto">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 sm:gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
             Manage Your Leads
           </h1>
-          <p className="text-sm text-slate-500 mt-1">
+          <p className="text-xs sm:text-sm text-slate-500 mt-0.5 sm:mt-1">
             Monitor lead status, assign tasks, and close deals faster.
           </p>
         </div>
 
-        <div className="flex items-center gap-2.5">
+        <div className="flex items-center gap-2 flex-wrap sm:flex-nowrap">
           <button
             onClick={onOpenImportModal}
-            className="px-4 py-2.5 rounded-xl bg-[#f87146] hover:bg-[#e05b30] text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition-all active:scale-95"
+            className="px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl bg-[#f87146] hover:bg-[#e05b30] text-white text-xs font-semibold shadow-xs flex items-center gap-2 transition-all active:scale-95"
           >
             <UploadCloud className="w-4 h-4" />
-            Import Leads via CSV
+            <span className="whitespace-nowrap">Import CSV</span>
           </button>
 
           {importedLeads.length > 0 && (
             <>
               <button
                 onClick={exportToCSV}
-                className="px-3.5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors"
+                className="px-3 py-2 sm:py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors"
                 title="Download standard DataWeave CSV"
               >
-                <Download className="w-4 h-4 text-slate-500" />
-                Export CSV
+                <Download className="w-3.5 h-3.5 text-slate-500" />
+                <span className="hidden sm:inline">Export</span> CSV
               </button>
               <button
                 onClick={exportToJSON}
-                className="px-3.5 py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors"
+                className="px-3 py-2 sm:py-2.5 rounded-xl border border-slate-200 hover:bg-slate-50 text-slate-700 text-xs font-semibold shadow-xs flex items-center gap-1.5 transition-colors"
                 title="Download JSON"
               >
-                <FileSpreadsheet className="w-4 h-4 text-slate-500" />
+                <FileSpreadsheet className="w-3.5 h-3.5 text-slate-500" />
                 JSON
               </button>
             </>
@@ -249,81 +249,86 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
         </div>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
-        <div className="p-4 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
-          <div className="text-xs font-semibold text-slate-500">Total Imported Leads</div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">
+      {/* Summary KPI Cards */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4">
+        <div className="p-3.5 sm:p-4 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
+          <div className="text-[11px] sm:text-xs font-semibold text-slate-500 truncate">Total Imported Leads</div>
+          <div className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
             {totalCount}
           </div>
-          <div className="text-[11px] text-[#0f5c53] font-medium mt-1">
+          <div className="text-[10px] sm:text-[11px] text-[#0f5c53] font-medium mt-1 truncate">
             {importedFileName ? `From ${importedFileName}` : "Active leads pipeline"}
           </div>
         </div>
 
-        <div className="p-4 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
-          <div className="text-xs font-semibold text-slate-500">Good Leads & Deals</div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">
+        <div className="p-3.5 sm:p-4 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
+          <div className="text-[11px] sm:text-xs font-semibold text-slate-500 truncate">Good Leads & Deals</div>
+          <div className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
             {goodLeadCount + saleDoneCount}
           </div>
-          <div className="text-[11px] text-emerald-600 font-medium mt-1">
-            {saleDoneCount} closed won ({conversionRate}%)
+          <div className="text-[10px] sm:text-[11px] text-emerald-600 font-medium mt-1 truncate">
+            {saleDoneCount} closed ({conversionRate}%)
           </div>
         </div>
 
-        <div className="p-4 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
-          <div className="text-xs font-semibold text-slate-500">Follow-up Needed</div>
-          <div className="text-2xl font-bold text-slate-900 mt-1">
+        <div className="p-3.5 sm:p-4 bg-white border border-slate-200/80 rounded-2xl shadow-xs">
+          <div className="text-[11px] sm:text-xs font-semibold text-slate-500 truncate">Follow-up Needed</div>
+          <div className="text-xl sm:text-2xl font-bold text-slate-900 mt-1">
             {didNotConnectCount}
           </div>
-          <div className="text-[11px] text-slate-400 font-medium mt-1">
+          <div className="text-[10px] sm:text-[11px] text-slate-400 font-medium mt-1 truncate">
             Pending telephone connect
           </div>
         </div>
 
         <div
           onClick={() => setActiveTab("skipped")}
-          className="p-4 bg-white border border-slate-200/80 rounded-2xl shadow-xs cursor-pointer hover:border-rose-300 transition-colors"
+          className="p-3.5 sm:p-4 bg-white border border-slate-200/80 rounded-2xl shadow-xs cursor-pointer hover:border-rose-300 transition-colors"
         >
-          <div className="text-xs font-semibold text-slate-500 flex items-center justify-between">
-            <span>Skipped Records</span>
+          <div className="text-[11px] sm:text-xs font-semibold text-slate-500 flex items-center justify-between">
+            <span className="truncate">Skipped Records</span>
             {skippedCount > 0 && (
-              <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse"></span>
+              <span className="w-2 h-2 rounded-full bg-rose-500 animate-pulse shrink-0"></span>
             )}
           </div>
-          <div className="text-2xl font-bold text-rose-600 mt-1">
+          <div className="text-xl sm:text-2xl font-bold text-rose-600 mt-1">
             {skippedCount}
           </div>
-          <div className="text-[11px] text-slate-400 font-medium mt-1">
-            Missing both phone & email
+          <div className="text-[10px] sm:text-[11px] text-slate-400 font-medium mt-1 truncate">
+            Missing phone & email
           </div>
         </div>
       </div>
 
+      {/* Main Table Container */}
       <div className="bg-white border border-slate-200/90 rounded-2xl shadow-xs overflow-hidden">
-        <div className="p-4 border-b border-slate-200/80 space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl w-fit">
+        {/* Table Controls / Filter Bar */}
+        <div className="p-3.5 sm:p-4 border-b border-slate-200/80 space-y-3">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+            {/* Tab switch */}
+            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-xl w-full sm:w-fit overflow-x-auto">
               <button
                 onClick={() => setActiveTab("imported")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${activeTab === "imported"
-                  ? "bg-white text-slate-900 shadow-xs"
-                  : "text-slate-600 hover:text-slate-900"
+                className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-center ${activeTab === "imported"
+                    ? "bg-white text-slate-900 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                   }`}
               >
                 Imported Leads ({importedLeads.length})
               </button>
               <button
                 onClick={() => setActiveTab("skipped")}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${activeTab === "skipped"
-                  ? "bg-white text-rose-700 shadow-xs"
-                  : "text-slate-600 hover:text-slate-900"
+                className={`flex-1 sm:flex-none px-3 py-1.5 rounded-lg text-xs font-semibold transition-all whitespace-nowrap text-center ${activeTab === "skipped"
+                    ? "bg-white text-rose-700 shadow-xs"
+                    : "text-slate-600 hover:text-slate-900"
                   }`}
               >
-                Skipped / Invalid ({skippedLeads.length})
+                Skipped ({skippedLeads.length})
               </button>
             </div>
 
-            <div className="flex items-center gap-2 max-w-md w-full">
+            {/* Search Input Bar */}
+            <div className="flex items-center gap-2 w-full md:max-w-md">
               <div className="relative flex-1">
                 <input
                   type="text"
@@ -334,6 +339,7 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
                 />
                 <button
                   type="button"
+                  aria-label="Search"
                   className="absolute right-1 top-1/2 -translate-y-1/2 p-1.5 text-slate-400 hover:text-[#0f5c53]"
                 >
                   <Search className="w-3.5 h-3.5" />
@@ -348,14 +354,16 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
                 }}
                 className="p-2 rounded-xl border border-slate-200 text-slate-400 hover:text-slate-700 hover:bg-slate-50 transition-colors shrink-0"
                 title="Reset filters"
+                aria-label="Reset filters"
               >
                 <RefreshCw className="w-4 h-4" />
               </button>
             </div>
           </div>
 
-          <div className="flex flex-wrap items-center gap-2 pt-1 text-xs">
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider mr-1">
+          {/* Quick Filters (Horizontal scroll on mobile) */}
+          <div className="flex items-center gap-2 pt-1 text-xs overflow-x-auto scrollbar-none pb-1">
+            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider shrink-0 mr-1">
               Status:
             </span>
             {[
@@ -368,23 +376,23 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
               <button
                 key={st.id}
                 onClick={() => setStatusFilter(st.id)}
-                className={`px-2.5 py-1 rounded-lg font-medium transition-all ${statusFilter === st.id
-                  ? "bg-[#0f5c53] text-white"
-                  : "bg-slate-100 text-slate-600 hover:bg-slate-200/70"
+                className={`px-2.5 py-1 rounded-lg font-medium transition-all whitespace-nowrap shrink-0 ${statusFilter === st.id
+                    ? "bg-[#0f5c53] text-white"
+                    : "bg-slate-100 text-slate-600 hover:bg-slate-200/70"
                   }`}
               >
                 {st.label}
               </button>
             ))}
 
-            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider ml-3 mr-1">
+            <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider ml-2 mr-1 shrink-0">
               Source:
             </span>
             <select
               value={sourceFilter}
               onChange={(e) => setSourceFilter(e.target.value)}
               aria-label="Filter by Data Source"
-              className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-medium text-slate-700 focus:outline-hidden"
+              className="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-xs font-medium text-slate-700 focus:outline-hidden shrink-0"
             >
               <option value="ALL">All Sources</option>
               <option value="leads_on_demand">leads_on_demand</option>
@@ -397,8 +405,9 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
           </div>
         </div>
 
+        {/* Table Content */}
         {filteredLeads.length === 0 ? (
-          <div className="py-16 text-center">
+          <div className="py-12 sm:py-16 text-center px-4">
             <div className="w-12 h-12 rounded-2xl bg-slate-100 text-slate-400 flex items-center justify-center mx-auto mb-3">
               <Users className="w-6 h-6" />
             </div>
@@ -418,18 +427,18 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
           </div>
         ) : (
           <div className="overflow-x-auto scrollbar-thin">
-            <table className="w-full text-left text-xs border-collapse">
+            <table className="w-full text-left text-xs border-collapse min-w-[700px]">
               <thead className="table-sticky-header">
                 <tr className="border-b border-slate-200 text-[11px] font-bold uppercase tracking-wider text-slate-500 bg-slate-50/80">
-                  <th className="px-4 py-3 font-bold">LEAD NAME</th>
-                  <th className="px-4 py-3 font-bold">EMAIL</th>
-                  <th className="px-4 py-3 font-bold">CONTACT</th>
-                  <th className="px-4 py-3 font-bold">DATE CREATED</th>
-                  <th className="px-4 py-3 font-bold">COMPANY</th>
-                  <th className="px-4 py-3 font-bold">STATUS</th>
-                  <th className="px-4 py-3 font-bold">DATA SOURCE</th>
-                  <th className="px-4 py-3 font-bold">LEAD OWNER</th>
-                  <th className="px-4 py-3 font-bold text-right">ACTIONS</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold min-w-[140px]">LEAD NAME</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold min-w-[160px]">EMAIL</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold min-w-[130px]">CONTACT</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold min-w-[120px]">DATE CREATED</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold min-w-[120px]">COMPANY</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold min-w-[110px]">STATUS</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold min-w-[120px]">DATA SOURCE</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold min-w-[120px]">LEAD OWNER</th>
+                  <th className="px-3 sm:px-4 py-3 font-bold text-right min-w-[80px]">ACTIONS</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-slate-100 text-slate-700">
@@ -439,34 +448,40 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
                     className="hover:bg-slate-50/80 transition-colors group cursor-pointer"
                     onClick={() => onSelectLead(lead)}
                   >
-                    <td className="px-4 py-3.5 font-semibold text-slate-900 max-w-xs truncate">
+                    {/* Lead Name */}
+                    <td className="px-3 sm:px-4 py-3.5 font-semibold text-slate-900 truncate">
                       {lead.name || (
                         <span className="text-slate-400 italic">Unnamed</span>
                       )}
                     </td>
 
-                    <td className="px-4 py-3.5 font-mono text-[11px] text-slate-600 max-w-xs truncate">
+                    {/* Email */}
+                    <td className="px-3 sm:px-4 py-3.5 font-mono text-[11px] text-slate-600 truncate">
                       {lead.email || <span className="text-slate-300">—</span>}
                     </td>
 
-                    <td className="px-4 py-3.5 font-mono text-[11px] text-slate-700 whitespace-nowrap">
+                    {/* Contact */}
+                    <td className="px-3 sm:px-4 py-3.5 font-mono text-[11px] text-slate-700 whitespace-nowrap">
                       {lead.country_code ? `${lead.country_code} ` : ""}
                       {lead.mobile_without_country_code || (
                         <span className="text-slate-300">—</span>
                       )}
                     </td>
 
-                    <td className="px-4 py-3.5 text-slate-500 whitespace-nowrap">
+                    {/* Date Created */}
+                    <td className="px-3 sm:px-4 py-3.5 text-slate-500 whitespace-nowrap">
                       {formatDisplayDate(lead.created_at)}
                     </td>
 
-                    <td className="px-4 py-3.5 text-slate-600 max-w-[140px] truncate">
+                    {/* Company */}
+                    <td className="px-3 sm:px-4 py-3.5 text-slate-600 truncate">
                       {lead.company || (
                         <span className="text-slate-300">—</span>
                       )}
                     </td>
 
-                    <td className="px-4 py-3.5 whitespace-nowrap">
+                    {/* Status Pill */}
+                    <td className="px-3 sm:px-4 py-3.5 whitespace-nowrap">
                       {activeTab === "skipped" ? (
                         <span className="px-2.5 py-1 rounded-full text-[11px] font-semibold bg-rose-50 text-rose-700 border border-rose-200">
                           {lead._skip_reason || "Skipped"}
@@ -476,7 +491,8 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
                       )}
                     </td>
 
-                    <td className="px-4 py-3.5 font-mono text-[11px] text-slate-500 whitespace-nowrap">
+                    {/* Data Source */}
+                    <td className="px-3 sm:px-4 py-3.5 font-mono text-[11px] text-slate-500 whitespace-nowrap">
                       {lead.data_source ? (
                         <span className="px-2 py-0.5 rounded-md bg-slate-100 text-slate-700 font-mono text-[10px]">
                           {lead.data_source}
@@ -486,13 +502,15 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
                       )}
                     </td>
 
-                    <td className="px-4 py-3.5 text-slate-600 max-w-[120px] truncate">
+                    {/* Lead Owner */}
+                    <td className="px-3 sm:px-4 py-3.5 text-slate-600 truncate">
                       {lead.lead_owner || (
                         <span className="text-slate-300">—</span>
                       )}
                     </td>
 
-                    <td className="px-4 py-3.5 text-right whitespace-nowrap">
+                    {/* Actions ("More >") */}
+                    <td className="px-3 sm:px-4 py-3.5 text-right whitespace-nowrap">
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -511,7 +529,7 @@ export const ManageLeadsView: React.FC<ManageLeadsViewProps> = ({
         )}
 
         {filteredLeads.length > visibleCount && (
-          <div className="p-4 border-t border-slate-100 text-center bg-slate-50/50">
+          <div className="p-3.5 sm:p-4 border-t border-slate-100 text-center bg-slate-50/50">
             <button
               onClick={() => setVisibleCount((prev) => prev + 15)}
               className="px-6 py-2 rounded-xl bg-white border border-slate-200 text-xs font-semibold text-slate-700 hover:bg-slate-50 shadow-2xs transition-colors"
