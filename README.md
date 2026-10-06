@@ -25,7 +25,7 @@ Raw CSV Upload (Any Format / Headers)
 [Step 3: User Confirmation Trigger]
    │
    ▼
-[Backend: Batch Processor + Groq LLM (llama-3.3-70b-versatile)]
+[Backend: Batch Processor + Groq LLM (openai/gpt-oss-120b)]
    │
    ├─► Intelligent Column Inference & Entity Extraction
    ├─► Contact Isolation (Primary vs. Note Consolidation)
@@ -43,7 +43,7 @@ Raw CSV Upload (Any Format / Headers)
 
 ### 1. Intelligent AI Extraction & Field Inference
 - **Zero Configuration**: Handles arbitrary column headers (e.g., `Customer Phone`, `Mob`, `Phone No`, `Primary Mail`, `Electronic Mail`, `Ad Campaign`).
-- **Target GrowEasy CRM Schema**:
+- **Target DataWeave CRM Schema**:
   | CRM Field | Description & Normalization Rule |
   | :--- | :--- |
   | `created_at` | ISO 8601 string compatible with `new Date(created_at)` |
@@ -89,7 +89,7 @@ Raw CSV Upload (Any Format / Headers)
 - **Server**: [Express 5](https://expressjs.com/)
 - **File Uploads**: [Multer](https://github.com/expressjs/multer)
 - **CSV Parser**: [csv-parser](https://github.com/mafintosh/csv-parser) (with stream support, BOM stripping, and automatic cleanup)
-- **AI Engine**: [Groq Cloud SDK](https://console.groq.com/) using `llama-3.3-70b-versatile` (high throughput & ultra-low latency)
+- **AI Engine**: [Groq Cloud SDK](https://console.groq.com/) using `openai/gpt-oss-120b` (high throughput & ultra-low latency)
 
 ---
 
@@ -171,7 +171,7 @@ csv_importor/
    ```env
    PORT=5000
    GROQ_API_KEY=gsk_your_groq_api_key_here
-   GROQ_MODEL=llama-3.3-70b-versatile
+   GROQ_MODEL=-openai/gpt-oss-120b
    ```
 
 4. Run the verification test suite:
