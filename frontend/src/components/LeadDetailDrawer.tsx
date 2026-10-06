@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import {
   X,
   User,
@@ -30,7 +30,24 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
 }) => {
   const [copied, setCopied] = React.useState(false);
 
+  // Close drawer on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && lead) {
+        onClose();
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [lead, onClose]);
+
   if (!lead) return null;
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (e.target === e.currentTarget) {
+      onClose();
+    }
+  };
 
   const copyJSON = () => {
     navigator.clipboard.writeText(JSON.stringify(lead, null, 2));
@@ -56,25 +73,28 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
   const isSkipped = Boolean(lead._skip_reason);
 
   return (
-    <div className="fixed inset-0 z-50 overflow-hidden bg-slate-900/40 backdrop-blur-sm flex justify-end animate-in fade-in duration-200">
+    <div
+      onClick={handleBackdropClick}
+      className="fixed inset-0 z-50 overflow-hidden bg-slate-900/40 backdrop-blur-sm flex justify-end animate-in fade-in duration-200"
+    >
       <div
-        className="w-full max-w-lg bg-white h-full shadow-2xl flex flex-col justify-between overflow-y-auto transform transition-transform"
+        className="w-full sm:max-w-lg bg-white h-full shadow-2xl flex flex-col justify-between overflow-y-auto transform transition-transform animate-in slide-in-from-right duration-200"
         onClick={(e) => e.stopPropagation()}
       >
         <div>
-          <div className="p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10">
-            <div>
-              <div className="flex items-center gap-2">
-                <h3 className="text-lg font-bold text-slate-900">
+          <div className="p-4 sm:p-6 border-b border-slate-100 flex items-center justify-between sticky top-0 bg-white z-10 gap-3">
+            <div className="min-w-0">
+              <div className="flex items-center gap-2 flex-wrap">
+                <h3 className="text-base sm:text-lg font-bold text-slate-900 truncate max-w-[240px] sm:max-w-xs">
                   {lead.name || "Unnamed Lead"}
                 </h3>
                 {isSkipped ? (
-                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1">
+                  <span className="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-rose-100 text-rose-800 border border-rose-200 flex items-center gap-1 shrink-0">
                     <AlertCircle className="w-3 h-3" /> Skipped
                   </span>
                 ) : (
                   <span
-                    className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${getStatusBadge(
+                    className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border shrink-0 ${getStatusBadge(
                       lead.crm_status
                     )}`}
                   >
@@ -88,14 +108,16 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
             </div>
             <button
               onClick={onClose}
-              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors"
+              className="p-1.5 rounded-lg text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors shrink-0"
+              aria-label="Close drawer"
             >
               <X className="w-5 h-5" />
             </button>
           </div>
 
+          {/* Reason Alert if skipped */}
           {isSkipped && (
-            <div className="mx-6 mt-4 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 flex items-start gap-2.5">
+            <div className="mx-4 sm:mx-6 mt-4 p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-xs text-rose-800 flex items-start gap-2.5">
               <AlertCircle className="w-4 h-4 text-rose-600 shrink-0 mt-0.5" />
               <div>
                 <span className="font-semibold">Reason for Skip:</span>{" "}
@@ -104,40 +126,41 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
             </div>
           )}
 
-          <div className="p-6 space-y-5">
-            <div className="bg-slate-50/80 rounded-xl p-4 border border-slate-100 space-y-3">
+          <div className="p-4 sm:p-6 space-y-4 sm:space-y-5">
+            {/* Primary Contacts */}
+            <div className="bg-slate-50/80 rounded-xl p-3.5 sm:p-4 border border-slate-100 space-y-3">
               <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 Primary Contact Information
               </div>
               <div className="space-y-2">
-                <div className="flex items-center gap-3 text-sm text-slate-700">
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700">
                   <Mail className="w-4 h-4 text-slate-400 shrink-0" />
-                  <span className="font-medium text-slate-900">
+                  <span className="font-medium text-slate-900 truncate">
                     {lead.email || (
                       <span className="text-slate-400 italic">No email</span>
                     )}
                   </span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-700">
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700">
                   <Phone className="w-4 h-4 text-slate-400 shrink-0" />
-                  <span className="font-medium text-slate-900">
+                  <span className="font-medium text-slate-900 truncate">
                     {lead.country_code ? `${lead.country_code} ` : ""}
                     {lead.mobile_without_country_code || (
                       <span className="text-slate-400 italic">No mobile</span>
                     )}
                   </span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-700">
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700">
                   <Building className="w-4 h-4 text-slate-400 shrink-0" />
-                  <span>
+                  <span className="truncate">
                     {lead.company || (
                       <span className="text-slate-400 italic">No company</span>
                     )}
                   </span>
                 </div>
-                <div className="flex items-center gap-3 text-sm text-slate-700">
+                <div className="flex items-center gap-3 text-xs sm:text-sm text-slate-700">
                   <MapPin className="w-4 h-4 text-slate-400 shrink-0" />
-                  <span>
+                  <span className="truncate">
                     {[lead.city, lead.state, lead.country]
                       .filter(Boolean)
                       .join(", ") || (
@@ -150,11 +173,12 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
               </div>
             </div>
 
-            <div className="space-y-3">
+            {/* CRM Metadata */}
+            <div className="space-y-2.5 sm:space-y-3">
               <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
                 CRM Mapping Fields
               </div>
-              <div className="grid grid-cols-2 gap-3 text-xs">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 text-xs">
                 <div className="p-3 bg-slate-50 rounded-xl border border-slate-100">
                   <div className="text-slate-400 font-medium">Lead Owner</div>
                   <div className="text-slate-800 font-semibold mt-0.5 truncate">
@@ -182,6 +206,7 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
               </div>
             </div>
 
+            {/* CRM Notes & Consolidated info */}
             {lead.crm_note && (
               <div className="space-y-2">
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-400 flex items-center gap-1.5">
@@ -194,6 +219,7 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
               </div>
             )}
 
+            {/* Additional Description */}
             {lead.description && (
               <div className="space-y-2">
                 <div className="text-xs font-bold uppercase tracking-wider text-slate-400">
@@ -207,7 +233,7 @@ export const LeadDetailDrawer: React.FC<LeadDetailDrawerProps> = ({
           </div>
         </div>
 
-        <div className="p-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between">
+        <div className="p-4 border-t border-slate-100 bg-slate-50 flex items-center justify-between gap-3">
           <button
             onClick={copyJSON}
             className="flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-slate-900 px-3 py-2 rounded-lg bg-white border border-slate-200 shadow-sm transition-all"
