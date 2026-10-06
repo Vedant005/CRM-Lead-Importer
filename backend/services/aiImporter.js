@@ -16,9 +16,9 @@ const ALLOWED_DATA_SOURCES = [
 ];
 
 const SYSTEM_PROMPT = `
-You are an expert AI CSV Lead Extractor & Schema Normalizer for GrowEasy CRM.
+You are an expert AI CSV Lead Extractor & Schema Normalizer for DataWeave CRM.
 
-Your task is to analyze arbitrary CSV rows (from Facebook Ads, Google Ads, Real Estate CRMs, Excel, Sales reports, Marketing Agencies, or messy spreadsheets) and accurately extract and map each lead into GrowEasy CRM format.
+Your task is to analyze arbitrary CSV rows (from Facebook Ads, Google Ads, Real Estate CRMs, Excel, Sales reports, Marketing Agencies, or messy spreadsheets) and accurately extract and map each lead into DataWeave CRM format.
 
 ### Target Schema Fields:
 - created_at: Lead creation date/time (ISO 8601 string e.g. "2026-05-13T14:20:48Z" or "2026-05-13 14:20:48" that MUST be valid for JavaScript 'new Date(created_at)'). If missing, use current date/time.
@@ -72,7 +72,7 @@ Your task is to analyze arbitrary CSV rows (from Facebook Ads, Google Ads, Real 
            "email": "john.doe@example.com",
            "country_code": "+91",
            "mobile_without_country_code": "9876543210",
-           "company": "GrowEasy",
+           "company": "DataWeave",
            "city": "Mumbai",
            "state": "Maharashtra",
            "country": "India",
@@ -178,7 +178,7 @@ export const sanitizeRecord = (item, originalRow = {}) => {
  * Process a batch of rows through Groq LLM with fallback and retry resilience.
  */
 export const processBatch = async (headers, rows) => {
-  const model = process.env.GROQ_MODEL || "llama-3.3-70b-versatile";
+  const model = process.env.GROQ_MODEL || "openai/gpt-oss-120b";
 
   try {
     const completion = await groq.chat.completions.create({
