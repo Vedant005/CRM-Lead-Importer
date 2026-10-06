@@ -20,7 +20,7 @@ app.get("/api/health", (req, res) => {
     status: "ok",
     service: "CSV Importer Backend",
     provider: "Groq",
-    model: process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
+    model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
     hasApiKey: Boolean(
       process.env.GROQ_API_KEY &&
       process.env.GROQ_API_KEY !== "your_groq_api_key_here"

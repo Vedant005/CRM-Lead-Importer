@@ -101,7 +101,7 @@ export const confirmImport = async (req, res, next) => {
       metadata: {
         totalBatches: batches.length,
         processedBatches,
-        model: process.env.GROQ_MODEL || "llama-3.3-70b-versatile",
+        model: process.env.GROQ_MODEL || "openai/gpt-oss-120b",
       },
     });
   } catch (error) {

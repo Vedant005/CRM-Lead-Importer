@@ -97,7 +97,7 @@ async function runTests() {
     try {
       const messyPath = path.resolve("sample_data", "messy_leads_unstructured.csv");
       const messyData = await parseCSV(messyPath);
-      console.log(`  Sending ${messyData.rows.length} rows to Groq model: ${process.env.GROQ_MODEL || "llama-3.3-70b-versatile"}`);
+      console.log(`  Sending ${messyData.rows.length} rows to Groq model: ${process.env.GROQ_MODEL || "openai/gpt-oss-120b"}`);
 
       const aiResult = await processBatch(messyData.headers, messyData.rows);
       assert(Array.isArray(aiResult.records), "AI returned records array");
