@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "GrowEasy CRM — AI CSV Lead Importer",
-  description: "Intelligent AI-powered CSV lead importer for GrowEasy CRM",
+  title: "DataWeave CRM — AI CSV Lead Importer",
+  description: "Intelligent AI-powered CSV lead importer for DataWeave CRM",
 };
 
 export default function RootLayout({
